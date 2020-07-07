@@ -6,7 +6,7 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/07/07 09:54:28 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/07/07 13:03:37 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ extern size_t	ft_strlen(const char *s);
 extern int		ft_strcmp(const char *s1, const char *s2);
 extern char		*ft_strcpy(char *dst, const char *src);
 extern ssize_t	ft_read(int fildes, void *buf, size_t nbyte);
+extern char		*ft_strdup(const char *s1);
 
 int		main()
 {
@@ -41,9 +42,13 @@ int		main()
 	ft_strcpy(dst_2, STRING);
 	printf("strcpy : %s\n", dst_1);
 	printf("ft_strcpy : %s\n", dst_2);
+#ifdef DEBUG
 	printf("bytes : %zi\n", read(1, buff, 10));
 	printf("read : %s\n", buff);
 	printf("bytes : %zi\n", ft_read(1, buff, 10));
-	printf("read : %s\n", buff);
+	printf("ft_read : %s\n", buff);
+# endif
+	printf("strdup : %s\n", strdup("tututututu"));
+	printf("ft_strdup : %s\n", ft_strdup("tututututu"));
 	return (0);
 }

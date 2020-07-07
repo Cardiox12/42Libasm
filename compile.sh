@@ -8,5 +8,10 @@ else
 	for target in $(find . -name "*.s") ; do
 		nasm -fmacho64 $target
 	done
-	gcc -o main main.c *.o
+	if [[ "$1" == "debug" ]] ; then
+		echo "Debug mode"
+		gcc -o main main.c *.o -DDEBUG
+	else
+		gcc -o main main.c *.o
+	fi
 fi
