@@ -2,7 +2,10 @@
 	section .text
 
 _ft_strcmp:
+	push	rdi
+	push	rsi
 loop:
+
 	cmp		byte [rdi], 0
 	jz		endloop
 	cmp		byte [rsi], 0
@@ -20,6 +23,8 @@ loop:
 endloop:
 	mov		al, byte [rdi]
 	mov		ah, byte [rsi]
+	pop		rsi
+	pop		rdi
 	cmp		al, ah
 	mov		rax, 0
 	je		returns
@@ -27,6 +32,7 @@ endloop:
 	jg		returns
 	mov		rax, -1
 	jl		returns
+
 
 returns:
 	ret
