@@ -6,7 +6,7 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/07/07 13:03:37 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/08/10 12:36:02 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int		main()
 	char dst_2[10];
 	char buff[10];
 
-	ft_write(1, STRING, 4);
-	ft_write(1, "\n", 1);
-	printf("strlen(\"%s\") : %zu\n", STRING, strlen(STRING));
-	printf("ft_strlen(\"%s\") : %zu\n", STRING, ft_strlen(STRING));
+	int ret1 = ft_write(-1, STRING, 4);
+	int ret2 = ft_write(-1, "\n", 1);
+	printf("%i = strlen(\"%s\") : %zu\n", ret1, STRING, strlen(STRING));
+	printf("%i = ft_strlen(\"%s\") : %zu\n", ret2, STRING, ft_strlen(STRING));
 	printf("strcmp(\"%s\", \"%s\") : %i\n", STRING, STRING2, strcmp(STRING, STRING2));
 	ft_strcmp(STRING, STRING2);
 	printf("ft_strcmp(\"%s\", \"%s\") : %i\n", STRING, STRING2, ft_strcmp(STRING, STRING2));

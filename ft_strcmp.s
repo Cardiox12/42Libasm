@@ -1,7 +1,7 @@
-	global _ft_strcmp
+	global ft_strcmp
 	section .text
 
-_ft_strcmp:
+ft_strcmp:
 	push	rdi
 	push	rsi
 loop:
