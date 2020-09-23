@@ -6,7 +6,7 @@ if [[ "$1" == "clean" ]] ; then
 	rm main
 else
 	for target in $(find . -name "*.s") ; do
-		nasm -fmacho64 $target
+		nasm -felf64 $target
 	done
 	if [[ "$1" == "debug" ]] ; then
 		echo "Debug mode"

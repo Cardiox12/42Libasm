@@ -42,12 +42,6 @@ int		main()
 	ft_strcpy(dst_2, STRING);
 	printf("strcpy : %s\n", dst_1);
 	printf("ft_strcpy : %s\n", dst_2);
-#ifdef DEBUG
-	printf("bytes : %zi\n", read(1, buff, 10));
-	printf("read : %s\n", buff);
-	printf("bytes : %zi\n", ft_read(1, buff, 10));
-	printf("ft_read : %s\n", buff);
-# endif
 	printf("strdup : %s\n", strdup("tututututu"));
 	printf("ft_strdup : %s\n", ft_strdup("tututututu"));
 	return (0);
