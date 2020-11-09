@@ -31,26 +31,10 @@ extern char		*ft_strdup(const char *s1);
 
 Test(simple, write_test)
 {
-<<<<<<< HEAD
 	char dst_1[10];
 	char dst_2[10];
 	char buff[10];
 
-	ft_write(1, STRING, 4);
-	ft_write(1, "\n", 1);
-	printf("strlen(\"%s\") : %zu\n", STRING, strlen(STRING));
-	printf("ft_strlen(\"%s\") : %zu\n", STRING, ft_strlen(STRING));
-	printf("strcmp(\"%s\", \"%s\") : %i\n", STRING, STRING2, strcmp(STRING, STRING2));
-	ft_strcmp(STRING, STRING2);
-	printf("ft_strcmp(\"%s\", \"%s\") : %i\n", STRING, STRING2, ft_strcmp(STRING, STRING2));
-	strcpy(dst_1, STRING);
-	ft_strcpy(dst_2, STRING);
-	printf("strcpy : %s\n", dst_1);
-	printf("ft_strcpy : %s\n", dst_2);
-	printf("strdup : %s\n", strdup("tututututu"));
-	printf("ft_strdup : %s\n", ft_strdup("tututututu"));
-	return (0);
-=======
 	ssize_t actual;
 	ssize_t expect;
 
@@ -103,5 +87,4 @@ Test(simple, strcmp_test)
 	actual = ft_strcmp("toto", TEST_EMPTY_STRING);
 	expect = strcmp("toto", TEST_EMPTY_STRING);
 	cr_expect(actual == expect, INTEGER_FMT, expect, actual);
->>>>>>> unittest
 }

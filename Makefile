@@ -6,7 +6,7 @@
 #    By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/31 01:40:00 by bbellavi          #+#    #+#              #
-#    Updated: 2020/08/10 23:52:41 by bbellavi         ###   ########.fr        #
+#    Updated: 2020/11/09 02:56:18 by bbellavi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ clean:
 	@rm -rf $(OBJS)
 
 fclean: clean
+	@rm -rf main
 	@rm -rf $(NAME)
 
 re: fclean all
