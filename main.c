@@ -6,7 +6,7 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/11/12 05:46:33 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/11/12 06:03:54 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,25 @@ Test(simple, strcpy_test)
 	cr_expect_str_eq(actual, TEST_STRING, STRING_FMT, TEST_STRING, actual);
 	cr_expect(ptr == &actual[0], PTR_FMT, actual, ptr);
 	cr_expect(actual[TEST_STRING_SIZE] == '\0', "Expected null byte but got %c", actual[TEST_STRING_SIZE]);
+}
+
+Test(simple, strdup_test)
+{
+	char *actual;
+
+	actual = ft_strdup(TEST_EMPTY_STRING);
+	if (actual)
+	{
+		cr_expect_str_empty(actual, "Expected empty string but got %s\n", actual);
+		free(actual);
+	}
+
+	actual = ft_strdup(TEST_STRING);
+	if (actual)
+	{
+		cr_expect_str_eq(actual, TEST_STRING, STRING_FMT, TEST_STRING, actual);
+		free(actual);
+	}
 }
 
 #endif
