@@ -6,7 +6,7 @@
 #    By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/31 01:40:00 by bbellavi          #+#    #+#              #
-#    Updated: 2020/11/09 02:56:18 by bbellavi         ###   ########.fr        #
+#    Updated: 2020/11/12 05:29:54 by bbellavi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,11 @@ $(NAME): $(OBJS)
 	@ar -rcs $@ $?
 
 test: $(NAME)
-	@$(CC) -o main main.c $< $(EXTERN_LIBS)
+	@$(CC) -o main main.c $< $(EXTERN_LIBS) -D MAIN
+	@./main
+
+unittest: $(NAME)
+	@$(CC) -o main main.c $< $(EXTERN_LIBS) -D UNITTEST
 	@./main
 
 %.o: %.s

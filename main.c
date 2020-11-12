@@ -6,21 +6,15 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/08/10 23:18:44 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/11/12 05:46:33 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
-#include <criterion/criterion.h>
-
-# define STRING_FMT "Expected %s but got %s\n"
-# define INTEGER_FMT "Expected %i but got %i\n"
-# define WINT_FMT "Expected %zu but got %zu\n"
-# define TEST_STRING "Hello World!\n"
-# define TEST_EMPTY_STRING ""
 
 extern ssize_t	ft_write(int fildes, const void *buf, size_t nbyte);
 extern size_t	ft_strlen(const char *s);
@@ -29,12 +23,35 @@ extern char		*ft_strcpy(char *dst, const char *src);
 extern ssize_t	ft_read(int fildes, void *buf, size_t nbyte);
 extern char		*ft_strdup(const char *s1);
 
+
+#ifdef MAIN
+
+int	main(void)
+{
+	char string[10];
+
+	printf("%s\n", ft_strcpy(string, "hello"));
+	printf("%s\n", string);
+	return (0);
+}
+
+#endif
+
+#ifdef UNITTEST
+
+# include <criterion/criterion.h>
+
+# define STRING_FMT "Expected %s but got %s\n"
+# define INTEGER_FMT "Expected %i but got %i\n"
+# define WINT_FMT "Expected %zu but got %zu\n"
+# define PTR_FMT "Expected %p but got %p\n"
+# define TEST_STRING "Hello World!\n"
+# define TEST_STRING_SIZE 13
+# define TEST_EMPTY_STRING ""
+
+
 Test(simple, write_test)
 {
-	char dst_1[10];
-	char dst_2[10];
-	char buff[10];
-
 	ssize_t actual;
 	ssize_t expect;
 
@@ -88,3 +105,25 @@ Test(simple, strcmp_test)
 	expect = strcmp("toto", TEST_EMPTY_STRING);
 	cr_expect(actual == expect, INTEGER_FMT, expect, actual);
 }
+
+Test(simple, strcpy_test)
+{
+	// Copy empty string
+	// Copy non empty string
+	// Test content
+	// Test pointer
+	// Test null byte
+	char actual[ 20 ];
+	char *ptr;
+
+	ptr = ft_strcpy(actual, TEST_EMPTY_STRING);
+	cr_expect_str_empty(actual, "Expected empty string but got %s\n", actual);
+	cr_expect(ptr == &actual[0], PTR_FMT, actual, ptr);
+
+	ptr = ft_strcpy(actual, TEST_STRING);
+	cr_expect_str_eq(actual, TEST_STRING, STRING_FMT, TEST_STRING, actual);
+	cr_expect(ptr == &actual[0], PTR_FMT, actual, ptr);
+	cr_expect(actual[TEST_STRING_SIZE] == '\0', "Expected null byte but got %c", actual[TEST_STRING_SIZE]);
+}
+
+#endif
