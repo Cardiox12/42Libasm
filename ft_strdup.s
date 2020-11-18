@@ -9,10 +9,11 @@ ft_strdup:
 	call	ft_strlen			; get src size
 	mov		rdi, rax			; move size into rdi to allocate size with malloc
 	call	malloc wrt ..plt	; call malloc
+
+	pop		rdi
+	mov		rsi, rdi
 	mov		rdi, rax			; move malloc ptr into strcpy param
-	pop		rsi					; get the original string
 	call	ft_strcpy			; copy string
-	mov		rax, rdi
 	ret
 								; Get size of string for malloc
 								; Malloc the size of src

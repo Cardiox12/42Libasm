@@ -1,6 +1,6 @@
 	section .bss
 
-WRITE_CODE	equ	0x02000004
+WRITE_CODE	equ	1
 	
 	global ft_write
 	extern __errno_location
