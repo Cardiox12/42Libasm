@@ -6,7 +6,7 @@
 #    By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/31 01:40:00 by bbellavi          #+#    #+#              #
-#    Updated: 2020/11/12 05:29:54 by bbellavi         ###   ########.fr        #
+#    Updated: 2020/11/26 00:45:20 by bbellavi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ $(NAME): $(OBJS)
 	@ar -rcs $@ $?
 
 test: $(NAME)
+	@touch test{1..2}
 	@$(CC) -o main main.c $< $(EXTERN_LIBS) -D MAIN
 	@./main
 
@@ -48,6 +49,7 @@ unittest: $(NAME)
 
 clean:
 	@rm -rf $(OBJS)
+	@rm -f test1 test2
 
 fclean: clean
 	@rm -rf main
