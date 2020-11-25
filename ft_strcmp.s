@@ -2,18 +2,22 @@
 	section .text
 
 ft_strcmp:
-	push	rdi
-	push	rsi
+	push	rdi				; save rdi
+	push	rsi				; save rsi
+	push	rbx				; save rbx
+	xor		rax, rax		; set rax to 0
+	xor		rbx, rbx		; set rbx to 0
+
 loop:
+	mov		al, byte [rdi]	; mov char pointed by rdi into al
+	mov		bl, byte [rsi]	; mov char pointed by rsi into bl
 
-	cmp		byte [rdi], 0
+	cmp		al, 0			;
 	jz		endloop
-	cmp		byte [rsi], 0
+	cmp		bl, 0
 	jz		endloop
 
-	mov		al, byte [rdi]
-	mov		ah, byte [rsi]
-	cmp		al, ah
+	cmp		al, bl
 	jne		endloop
 
 	inc		rdi
@@ -21,18 +25,10 @@ loop:
 	jmp		loop
 
 endloop:
-	mov		al, byte [rdi]
-	mov		ah, byte [rsi]
-	pop		rsi
-	pop		rdi
-	cmp		al, ah
-	mov		rax, 0
-	je		returns
-	mov		rax, 1
-	jg		returns
-	mov		rax, -1
-	jl		returns
-
+	sub		rax, rbx
 
 returns:
+	pop		rbx
+	pop		rsi
+	pop		rdi
 	ret

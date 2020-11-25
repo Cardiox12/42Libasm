@@ -6,7 +6,7 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/11/12 06:03:54 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/11/25 00:29:22 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ extern char		*ft_strdup(const char *s1);
 
 int	main(void)
 {
-	char string[10];
+	int diff;
 
-	printf("%s\n", ft_strcpy(string, "hello"));
-	printf("%s\n", string);
+	if ((diff = ft_strcmp("bon", "")))
+		printf("%i\n", diff);
 	return (0);
 }
 
