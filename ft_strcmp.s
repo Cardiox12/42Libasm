@@ -12,23 +12,32 @@ loop:
 	mov		al, byte [rdi]	; mov char pointed by rdi into al
 	mov		bl, byte [rsi]	; mov char pointed by rsi into bl
 
-	cmp		al, 0			;
-	jz		endloop
-	cmp		bl, 0
-	jz		endloop
+	cmp		al, 0			; check null-byte
+	jz		endloop			; if null-byte jump to endloop
+	cmp		bl, 0			; check null-byte
+	jz		endloop			; if null-byte jump to endloop
 
-	cmp		al, bl
-	jne		endloop
-
-	inc		rdi
-	inc		rsi
-	jmp		loop
+	cmp		al, bl			; compare al and bl
+	jne		endloop			; if al != bl then jump to endloop
+							; otherwise
+	inc		rdi				; increment rdi pointer
+	inc		rsi				; increment rsi pointer
+	jmp		loop			; jump to loop tag
 
 endloop:
-	sub		rax, rbx
+	sub		rax, rbx		; subtract rax from rbx
+	; al representing the lowest byte of rax
+	; rax [    [  eax   ]
+	; rax        [  ax  ]
+	; rax [         [al]]
+
+	; bl representing the lowest byte of rax
+	; rbx [    [  ebx   ]
+	; rbx        [  bx  ]
+	; rbx [         [bl]]
 
 returns:
-	pop		rbx
-	pop		rsi
-	pop		rdi
-	ret
+	pop		rbx				; restore rbx value
+	pop		rsi				; restore rsi value
+	pop		rdi				; restore rdi value
+	ret						; return
