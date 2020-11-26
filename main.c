@@ -6,11 +6,12 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/11/26 02:23:45 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/11/26 11:43:54 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -20,10 +21,10 @@
 
 extern ssize_t	ft_write(int fildes, const void *buf, size_t nbyte);
 extern size_t	ft_strlen(const char *s);
-extern int	ft_strcmp(const char *s1, const char *s2);
-extern char	*ft_strcpy(char *dst, const char *src);
+extern int		ft_strcmp(const char *s1, const char *s2);
+extern char		*ft_strcpy(char *dst, const char *src);
 extern ssize_t	ft_read(int fildes, void *buf, size_t nbyte);
-extern char	*ft_strdup(const char *s1);
+extern char		*ft_strdup(const char *s);
 
 #define TEST_FILE1 "./test1"
 #define TEST_FILE2 "./test2"
@@ -123,6 +124,10 @@ void	Test_write(void)
 	actual = ft_write(pair.second, SIMPLE_STR, SIMPLE_STR_SIZE);
 	Assert_int(expect, actual, "simple string to file");
 
+	expect = write(pair.first, LONG_STR, LONG_STR_SIZE);
+	actual = ft_write(pair.second, LONG_STR, LONG_STR_SIZE);
+	Assert_int(expect, actual, "simple string to file");
+
 	expect = write(pair.first, EMPTY_STR, 0);
 	actual = ft_write(pair.second, EMPTY_STR, 0);
 	Assert_int(expect, actual, "empty string to file");
@@ -213,7 +218,7 @@ void	Test_strcpy(void)
 {
 	char actual[LONG_STR_SIZE + 1];
 
-	Test_Header("strcpy");
+	Test_Header("Strcpy");
 
 	// Check null-byte
 	ft_strcpy(actual, EMPTY_STR);
@@ -239,11 +244,40 @@ void	Test_strcpy(void)
 	Assert_str(LONG_STR, actual, "long string copy");
 }
 
+void	Test_strdup()
+{
+	char *actual;
+
+	Test_Header("Strdup");
+
+	// Check null-byte and duplicate
+	actual = ft_strdup(EMPTY_STR);
+	if (actual == NULL)
+		return ;
+	Assert_str(EMPTY_STR, actual, "empty string duplicate");
+	free(actual);
+
+	actual = ft_strdup(SIMPLE_STR);
+	if (actual == NULL)
+		return ;
+	Assert_true(actual[SIMPLE_STR_SIZE] == '\0', "null-byte simple string");
+	Assert_str(SIMPLE_STR, actual, "simple string duplicate");
+	free(actual);
+
+	actual = ft_strdup(LONG_STR);
+	if (actual == NULL)
+		return ;
+	Assert_true(actual[LONG_STR_SIZE] == '\0', "null-byte long string");
+	Assert_str(LONG_STR, actual, "long string duplicate");
+	free(actual);
+}
+
 int	main(void)
 {
 	Test_write();
 	Test_strlen();
 	Test_strcmp();
 	Test_strcpy();
+	Test_strdup();
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/31 01:40:00 by bbellavi          #+#    #+#              #
-#    Updated: 2020/11/26 00:45:20 by bbellavi         ###   ########.fr        #
+#    Updated: 2020/11/26 11:19:34 by bbellavi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ COLOR_NC			= \e[0m
 COLOR_LIGHT_GREEN	= \e[1;32m
 
 NAME 				= libasm.a
-CC					= gcc -Wall -Werror -Wextra
+CC					= gcc -Wall -Werror -Wextra -static
 EXTERN_LIBS			= -lcriterion
 NASM				= nasm
 NASM_FLAGS 			= -felf64
@@ -36,11 +36,7 @@ $(NAME): $(OBJS)
 
 test: $(NAME)
 	@touch test{1..2}
-	@$(CC) -o main main.c $< $(EXTERN_LIBS) -D MAIN
-	@./main
-
-unittest: $(NAME)
-	@$(CC) -o main main.c $< $(EXTERN_LIBS) -D UNITTEST
+	@$(CC) -o main main.c $<
 	@./main
 
 %.o: %.s

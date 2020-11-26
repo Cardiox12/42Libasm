@@ -2,22 +2,16 @@
 	section	.text
 
 ft_strcpy:
-	push	rdi
-	push	rsi
+	mov		rax, rdi
 
-loop:
-	mov		al, byte [rsi]
-	cmp		al, 0x0
-	jz		returns
+.loop:
+	cmp		byte [rsi], 0x0	; Check for null-byte
+	jz		.returns		; if null-byte, jump to returns
 
-	mov 	byte [rdi], al
-	inc		rdi
-	inc		rsi
-	jmp		loop
+	movsb					; Move bytes from rsi to rdi
+							; movsb stands for move string byte
+	jmp		.loop			; Jump to loop until rsi byte is null
 
-returns:
-	mov 	byte [rdi], al
-	mov		rax, rsi
-	pop		rsi
-	pop		rdi
+.returns:
+	mov		byte [rdi], 0
 	ret

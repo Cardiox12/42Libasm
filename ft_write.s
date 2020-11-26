@@ -6,6 +6,8 @@
 
 ft_write:
 	push		rbx
+	push		r12
+
 	mov			rax, 1
 	syscall
 
@@ -13,11 +15,12 @@ ft_write:
 	jge			.end
 
 	neg			rax
-	mov			r8, rax
+	mov			r12, rax
 	call		__errno_location wrt ..plt
-	mov			[rax], r8
+	mov			[rax], r12
 	mov			rax, -1
 
 .end:
+	pop			r12
 	pop			rbx
 	ret
