@@ -6,7 +6,7 @@
 #    By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/31 01:40:00 by bbellavi          #+#    #+#              #
-#    Updated: 2020/11/26 11:19:34 by bbellavi         ###   ########.fr        #
+#    Updated: 2020/11/26 14:13:12 by bbellavi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,10 @@ OBJS				= $(SRCS:.s=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	@touch test{1..2}
 	@printf "$(COLOR_LIGHT_GREEN)Building library ${basename $(NAME) .a} $(COLOR_NC)\n"
 	@ar -rcs $@ $?
-
-test: $(NAME)
-	@touch test{1..2}
-	@$(CC) -o main main.c $<
-	@./main
+	@$(CC) -o main main.c $(NAME)
 
 %.o: %.s
 	@printf "$(COLOR_LIGHT_GREEN)Compiling - ${<} $(COLOR_NC)\n"
