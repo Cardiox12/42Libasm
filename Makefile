@@ -6,7 +6,7 @@
 #    By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/31 01:40:00 by bbellavi          #+#    #+#              #
-#    Updated: 2020/11/26 14:13:12 by bbellavi         ###   ########.fr        #
+#    Updated: 2020/11/26 14:24:47 by bbellavi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ COLOR_NC			= \e[0m
 COLOR_LIGHT_GREEN	= \e[1;32m
 
 NAME 				= libasm.a
-CC					= gcc -Wall -Werror -Wextra -static
-EXTERN_LIBS			= -lcriterion
+CC					= gcc -Wall -Werror -Wextra
 NASM				= nasm
 NASM_FLAGS 			= -felf64
 SRCS				= ft_read.s
