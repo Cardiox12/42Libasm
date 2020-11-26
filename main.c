@@ -6,7 +6,7 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/11/26 01:34:48 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/11/26 02:10:29 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ extern char	*ft_strdup(const char *s1);
 #define TEST_FILE2 "./test2"
 
 #define SIMPLE_STR "Hello World!\n"
+#define EMPTY_STR ""
 #define LONG_STR "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
 Duis interdum odio sit amet vulputate mollis. Proin vel ligula vel nisi \
 tristique dapibus ut eu leo. Aliquam leo mauris, maximus vitae dui at, \
@@ -41,7 +42,6 @@ purus, eget rhoncus dui. Fusce nulla purus, congue interdum dolor vitae, \
 consectetur suscipit libero."
 
 #define SIMPLE_LEN strlen(SIMPLE_STR)
-#define EMPTY_STR ""
 
 typedef struct {
 	int first;
@@ -51,7 +51,7 @@ typedef struct {
 #define Assert_int(expect, actual, test)													\
 {																							\
 	if (actual != expect)																	\
-		printf("Test: %s : Expected : %i but got : %i\n", test, expect, actual);			\
+		printf("Test: %-30s : Expected : %-10i but got : %i\n", test, expect, actual);		\
 	else																					\
 		printf("Test: %-30s : Success\n", test);											\
 }
@@ -59,7 +59,7 @@ typedef struct {
 #define Assert_str(expect, actual, test)													\
 {																							\
 	if (strcmp(expect, actual) != 0)														\
-		printf("Test: %s : Expected : %s but got : %s\n", test, expect, actual);			\
+		printf("Test: %-30s : Expected : %-10s but got : %s\n", test, expect, actual);		\
 	else																					\
 		printf("Test: %-30s : Success\n", test);											\
 }
@@ -67,7 +67,7 @@ typedef struct {
 #define Assert_true(expr, test)																\
 {																							\
 	if (!(expr))																			\
-		printf("Test: %s : Assertion failed, (%s) must be true\n", test, #expr);			\
+		printf("Test: %-30s : Assertion failed, (%s) must be true\n", test, #expr);			\
 	else																					\
 		printf("Test: %-30s : Success\n", test);											\
 }
@@ -75,7 +75,7 @@ typedef struct {
 #define Assert_false(expr, test)															\
 {																							\
 	if (expr)																				\
-		printf("Test: %s : Assertion failed, (%s) must be false\n", test, #expr);			\
+		printf("Test: %-30s : Assertion failed, (%s) must be false\n", test, #expr);		\
 	else																					\
 		printf("Test: %-30s : Success\n", test);											\
 }
@@ -157,9 +157,60 @@ void	Test_strlen(void)
 	Assert_int(expect, actual, "long string");
 }
 
+void	Test_strcmp(void)
+{
+	int expect;
+	int actual;
+
+	Test_Header("Strcmp");
+
+	// Equal strings
+	expect = strcmp(SIMPLE_STR, SIMPLE_STR);
+	actual = ft_strcmp(SIMPLE_STR, SIMPLE_STR);
+	Assert_int(expect, actual, "simple equal strings");
+
+	expect = strcmp(EMPTY_STR, EMPTY_STR);
+	actual = ft_strcmp(EMPTY_STR, EMPTY_STR);
+	Assert_int(expect, actual, "empty equal strings");
+
+	expect = strcmp(LONG_STR, LONG_STR);
+	actual = ft_strcmp(LONG_STR, LONG_STR);
+	Assert_int(expect, actual, "long equal strings");
+
+	// First string not equal
+	actual = ft_strcmp(EMPTY_STR, SIMPLE_STR);
+	Assert_true(actual < 0, "empty / simple strings");
+
+	actual = ft_strcmp(LONG_STR, SIMPLE_STR);
+	Assert_true(actual > 0, "long / simple strings");
+
+	actual = ft_strcmp(SIMPLE_STR, EMPTY_STR);
+	Assert_true(actual > 0, "simple / empty strings");
+
+	actual = ft_strcmp(LONG_STR, EMPTY_STR);
+	Assert_true(actual > 0, "long / empty strings");
+
+	actual = ft_strcmp(EMPTY_STR, LONG_STR);
+	Assert_true(actual < 0, "empty / long strings");
+
+	// Second string not equal
+	actual = ft_strcmp(SIMPLE_STR, EMPTY_STR);
+	Assert_true(actual > 0, "simple / empty strings");
+
+	actual = ft_strcmp(SIMPLE_STR, LONG_STR);
+	Assert_true(actual < 0, "simple / long");
+
+	actual = ft_strcmp(EMPTY_STR, SIMPLE_STR);
+	Assert_true(actual < 0, "empty / simple strings");
+
+	actual = ft_strcmp(LONG_STR, SIMPLE_STR);
+	Assert_true(actual > 0, "long / simple strings");
+}
+
 int	main(void)
 {
 	Test_write();
 	Test_strlen();
+	Test_strcmp();
 	return (0);
 }
