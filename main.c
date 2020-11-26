@@ -6,7 +6,7 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/11/26 02:10:29 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/11/26 02:23:45 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ quam cursus lacinia. Phasellus in tincidunt ligula. Etiam sit amet posuere \
 purus, eget rhoncus dui. Fusce nulla purus, congue interdum dolor vitae, \
 consectetur suscipit libero."
 
-#define SIMPLE_LEN strlen(SIMPLE_STR)
+#define LONG_STR_SIZE strlen(LONG_STR)
+#define SIMPLE_STR_SIZE strlen(SIMPLE_STR)
+#define EMPTY_STR_SIZE 0
 
 typedef struct {
 	int first;
@@ -94,8 +96,8 @@ void	Test_write(void)
 	Test_Header("Write");
 
 	// Write simple string to stdin
-	expect = write(STDIN_FILENO, SIMPLE_STR, SIMPLE_LEN);
-	actual = ft_write(STDIN_FILENO, SIMPLE_STR, SIMPLE_LEN);
+	expect = write(STDIN_FILENO, SIMPLE_STR, SIMPLE_STR_SIZE);
+	actual = ft_write(STDIN_FILENO, SIMPLE_STR, SIMPLE_STR_SIZE);
 	Assert_int(expect, actual, "simple string");
 
 	// Write empty string to stdin
@@ -117,8 +119,8 @@ void	Test_write(void)
 		puts(strerror(errno));
 		return ;
 	}
-	expect = write(pair.first, SIMPLE_STR, SIMPLE_LEN);
-	actual = ft_write(pair.second, SIMPLE_STR, SIMPLE_LEN);
+	expect = write(pair.first, SIMPLE_STR, SIMPLE_STR_SIZE);
+	actual = ft_write(pair.second, SIMPLE_STR, SIMPLE_STR_SIZE);
 	Assert_int(expect, actual, "simple string to file");
 
 	expect = write(pair.first, EMPTY_STR, 0);
@@ -207,10 +209,41 @@ void	Test_strcmp(void)
 	Assert_true(actual > 0, "long / simple strings");
 }
 
+void	Test_strcpy(void)
+{
+	char actual[LONG_STR_SIZE + 1];
+
+	Test_Header("strcpy");
+
+	// Check null-byte
+	ft_strcpy(actual, EMPTY_STR);
+	Assert_true(actual[EMPTY_STR_SIZE] == '\0', "null-byte empty string");
+
+	ft_strcpy(actual, SIMPLE_STR);
+	Assert_true(actual[SIMPLE_STR_SIZE] == '\0', "null-byte simple string");
+
+	ft_strcpy(actual, LONG_STR);
+	Assert_true(actual[LONG_STR_SIZE] == '\0', "null-byte long string");
+
+	// Check copy
+	memset(actual, 0, LONG_STR_SIZE);
+	ft_strcpy(actual, EMPTY_STR);
+	Assert_str(EMPTY_STR, actual, "empty string copy");
+
+	memset(actual, 0, LONG_STR_SIZE);
+	ft_strcpy(actual, SIMPLE_STR);
+	Assert_str(SIMPLE_STR, actual, "simple string copy");
+
+	memset(actual, 0, LONG_STR_SIZE);
+	ft_strcpy(actual, LONG_STR);
+	Assert_str(LONG_STR, actual, "long string copy");
+}
+
 int	main(void)
 {
 	Test_write();
 	Test_strlen();
 	Test_strcmp();
+	Test_strcpy();
 	return (0);
 }
