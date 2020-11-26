@@ -6,7 +6,7 @@
 /*   By: bbellavi <bbellavi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:32:33 by bbellavi          #+#    #+#             */
-/*   Updated: 2020/11/26 11:43:54 by bbellavi         ###   ########.fr       */
+/*   Updated: 2020/11/26 12:38:45 by bbellavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ extern char		*ft_strdup(const char *s);
 
 #define TEST_FILE1 "./test1"
 #define TEST_FILE2 "./test2"
+#define BUFF_SIZE 500
 
 #define SIMPLE_STR "Hello World!\n"
 #define EMPTY_STR ""
@@ -244,7 +245,7 @@ void	Test_strcpy(void)
 	Assert_str(LONG_STR, actual, "long string copy");
 }
 
-void	Test_strdup()
+void	Test_strdup(void)
 {
 	char *actual;
 
@@ -272,6 +273,58 @@ void	Test_strdup()
 	free(actual);
 }
 
+void	Test_read(void)
+{
+	char	expect_buff[BUFF_SIZE + 1];
+	char	actual_buff[BUFF_SIZE + 1];
+	int		actual_ret;
+	int		expect_ret;
+	t_pair	fd;
+
+	Test_Header("Read");
+
+	fd.first = open(TEST_FILE1, O_RDONLY);
+	if (fd.first < 0)
+	{
+		puts(strerror(errno));
+		return ;
+	}
+	fd.second = open(TEST_FILE2, O_RDONLY);
+	if (fd.second < 0)
+	{
+		close(fd.first);
+		puts(strerror(errno));
+		return ;
+	}
+	expect_ret = read(fd.first, expect_buff, BUFF_SIZE);
+	actual_ret = ft_read(fd.second, actual_buff, BUFF_SIZE);
+	expect_buff[expect_ret] = '\0';
+	actual_buff[actual_ret] = '\0';
+	Assert_str(expect_buff, actual_buff, "Read from file");
+
+	// Read from stdin
+	write(STDIN_FILENO, "read> ", 6);
+	expect_ret = read(STDIN_FILENO, expect_buff, BUFF_SIZE);
+	write(STDIN_FILENO, "ft_read> ", 9);
+	actual_ret = ft_read(STDIN_FILENO, actual_buff, BUFF_SIZE);
+	expect_buff[expect_ret] = '\0';
+	actual_buff[actual_ret] = '\0';
+	Assert_str(expect_buff, actual_buff, "Read from stdin");
+	
+	close(fd.first);
+	close(fd.second);
+	// Read from closed fd
+	actual_ret = ft_read(fd.second, actual_buff, BUFF_SIZE);
+	Assert_true(actual_ret < 0, "Read from closed fd")
+	Assert_int(errno, EBADF, "Read from closed fd");
+
+	// Read from bad fd
+	errno = 0;
+	actual_ret = ft_read(-10, actual_buff, BUFF_SIZE);
+	Assert_true(actual_ret < 0, "Read from bad fd");
+	Assert_int(errno, EBADF, "Read from bad fd");
+}
+
 int	main(void)
 {
 	Test_write();
@@ -279,5 +332,6 @@ int	main(void)
 	Test_strcmp();
 	Test_strcpy();
 	Test_strdup();
+	Test_read();
 	return (0);
 }
